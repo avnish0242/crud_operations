@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Records</title>
+     {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.confirm-delete', function() {
+            $('#delete-popup').modal('show')
+        })
+
+        })
+    </script>
+</head>
+<body>
+<table class="table table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+    <tr>
+        <th>Task ID</th>
+        <th>Task Description</th>
+        <th>Assigned To</th>
+        <th>Deadline</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for task in tasks %}
+    <tr>
+        <td>{{ task.taskid }}</td>
+        <td>{{ task.taskdesc }}</td>
+        <td>{{ task.assigned_to }}</td>
+        <td>{{ task.deadline }}</td>
+        <td>
+            <a href="/edit/{{ task.taskid }}"><span class="glyphicon glyphicon-pencil" >Edit</span></a> &nbsp;
+            <a href="#" class="confirm-delete" data-id="1">Delete</a><br>
+            <div id="delete-popup" class="modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Delete Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are You Sure?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <a href="/delete/{{ task.taskid }}">Yes</a>
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<center><a href="/tsk" class="btn btn-primary">Add New Record</a></center>
+</body>
+</html>
